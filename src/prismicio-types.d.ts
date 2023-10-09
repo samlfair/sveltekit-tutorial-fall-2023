@@ -156,9 +156,83 @@ export type CardListSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *CardList → Primary*
+ */
+export interface CardListSliceHeaderImagePrimary {
+	/**
+	 * Heading field in *CardList → Primary*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	heading: prismic.TitleField;
+
+	/**
+	 * Wide field in *CardList → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: card_list.primary.wide
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	wide: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *CardList → Items*
+ */
+export interface CardListSliceHeaderImageItem {
+	/**
+	 * Title field in *CardList → Items*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].title
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	title: prismic.TitleField;
+
+	/**
+	 * Description field in *CardList → Items*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * Image field in *CardList → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Header Image variation for CardList Slice
+ *
+ * - **API ID**: `headerImage`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CardListSliceHeaderImage = prismic.SharedSliceVariation<
+	'headerImage',
+	Simplify<CardListSliceHeaderImagePrimary>,
+	Simplify<CardListSliceHeaderImageItem>
+>;
+
+/**
  * Slice variation for *CardList*
  */
-type CardListSliceVariation = CardListSliceDefault;
+type CardListSliceVariation = CardListSliceDefault | CardListSliceHeaderImage;
 
 /**
  * CardList Shared Slice
@@ -280,8 +354,11 @@ declare module '@prismicio/client' {
 			CardListSlice,
 			CardListSliceDefaultPrimary,
 			CardListSliceDefaultItem,
+			CardListSliceHeaderImagePrimary,
+			CardListSliceHeaderImageItem,
 			CardListSliceVariation,
 			CardListSliceDefault,
+			CardListSliceHeaderImage,
 			HeroTextSlice,
 			HeroTextSliceDefaultPrimary,
 			HeroTextSliceVariation,

@@ -3,21 +3,31 @@
 
 	/** @type {import("@prismicio/client").Content.CardListSlice} */
 	export let slice;
+
+	$: wide = slice.primary.wide;
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<PrismicRichText field={slice.primary.heading} />
-	<div class="cards">
+	<div class="cards" class:wide>
 		{#each slice.items as card, index}
 			<article class="card">
 				<header>
+					{#if slice.variation === 'headerImage'}
+						<PrismicImage
+							field={card.image}
+							style="border-radius: var(--radius-blob-{(index % 5) + 1})"
+						/>
+					{/if}
 					<PrismicRichText field={card.title} />
 				</header>
 				<PrismicRichText field={card.description} />
-				<footer>
-					<PrismicImage field={card.image} />
-					<h4>{card.name}</h4>
-				</footer>
+				{#if slice.variation === 'default'}
+					<footer>
+						<PrismicImage field={card.image} />
+						<h4>{card.name}</h4>
+					</footer>
+				{/if}
 			</article>
 		{:else}
 			<p>Nothing to see here...</p>
@@ -47,6 +57,34 @@
 		flex-direction: column;
 		align-items: left;
 		gap: var(--size-3);
+	}
+
+	.cards.wide {
+		grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+	}
+
+	.wide article {
+		padding: var(--size-7);
+	}
+
+	.wide header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: start;
+		gap: var(--size-5);
+		margin-block: var(--size-2);
+	}
+
+	.wide header :global(img) {
+		margin: 0;
+	}
+
+	header :global(img) {
+		width: 100px;
+		height: 100px;
+		object-fit: cover;
+		margin: var(--size-5) auto var(--size-7);
 	}
 
 	footer {
