@@ -4,7 +4,7 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type PageDocumentDataSlicesSlice = RichTextSlice;
+type PageDocumentDataSlicesSlice = HeroTextSlice | RichTextSlice;
 
 /**
  * Content for Page documents
@@ -30,7 +30,7 @@ interface PageDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/field#slices
 	 */
-	slices: prismic.SliceZone<PageDocumentDataSlicesSlice>;
+	slices: prismic.SliceZone<PageDocumentDataSlicesSlice>
 	/**
 	 * Meta Title field in *Page*
 	 *
@@ -39,7 +39,7 @@ interface PageDocumentData {
 	 * - **API ID Path**: page.meta_title
 	 * - **Tab**: SEO & Metadata
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
+	 */;
 	meta_title: prismic.KeyTextField;
 
 	/**
@@ -81,6 +81,58 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 >;
 
 export type AllDocumentTypes = PageDocument;
+
+/**
+ * Primary content in *HeroText → Primary*
+ */
+export interface HeroTextSliceDefaultPrimary {
+	/**
+	 * Title field in *HeroText → Primary*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero_text.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	title: prismic.TitleField;
+
+	/**
+	 * Subtitle field in *HeroText → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero_text.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	subtitle: prismic.RichTextField;
+}
+
+/**
+ * Default variation for HeroText Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroTextSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<HeroTextSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *HeroText*
+ */
+type HeroTextSliceVariation = HeroTextSliceDefault;
+
+/**
+ * HeroText Shared Slice
+ *
+ * - **API ID**: `hero_text`
+ * - **Description**: HeroText
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroTextSlice = prismic.SharedSlice<'hero_text', HeroTextSliceVariation>;
 
 /**
  * Primary content in *RichText → Primary*
@@ -138,6 +190,10 @@ declare module '@prismicio/client' {
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			HeroTextSlice,
+			HeroTextSliceDefaultPrimary,
+			HeroTextSliceVariation,
+			HeroTextSliceDefault,
 			RichTextSlice,
 			RichTextSliceDefaultPrimary,
 			RichTextSliceVariation,

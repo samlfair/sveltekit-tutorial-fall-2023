@@ -1,0 +1,31 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading1",
+						"content": {
+							"text": "Broken"
+						}
+					}
+				]
+			},
+			"subtitle": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Do nostrud consequat fugiat id reprehenderit incididunt dolor deserunt excepteur nulla irure. Ex sit deserunt pariatur proident aliqua et qui exercitation fugiat tempor ex qui ut exercitation. Ipsum ipsum cillum nulla voluptate non."
+						}
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]
