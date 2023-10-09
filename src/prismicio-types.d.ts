@@ -244,6 +244,58 @@ type CardListSliceVariation = CardListSliceDefault | CardListSliceHeaderImage;
 export type CardListSlice = prismic.SharedSlice<'card_list', CardListSliceVariation>;
 
 /**
+ * Primary content in *ContactForm → Primary*
+ */
+export interface ContactFormSliceDefaultPrimary {
+	/**
+	 * Heading field in *ContactForm → Primary*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact_form.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	heading: prismic.TitleField;
+
+	/**
+	 * Description field in *ContactForm → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact_form.primary.description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for ContactForm Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactFormSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<ContactFormSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *ContactForm*
+ */
+type ContactFormSliceVariation = ContactFormSliceDefault;
+
+/**
+ * ContactForm Shared Slice
+ *
+ * - **API ID**: `contact_form`
+ * - **Description**: ContactForm
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactFormSlice = prismic.SharedSlice<'contact_form', ContactFormSliceVariation>;
+
+/**
  * Primary content in *HeroText → Primary*
  */
 export interface HeroTextSliceDefaultPrimary {
@@ -359,6 +411,10 @@ declare module '@prismicio/client' {
 			CardListSliceVariation,
 			CardListSliceDefault,
 			CardListSliceHeaderImage,
+			ContactFormSlice,
+			ContactFormSliceDefaultPrimary,
+			ContactFormSliceVariation,
+			ContactFormSliceDefault,
 			HeroTextSlice,
 			HeroTextSliceDefaultPrimary,
 			HeroTextSliceVariation,
