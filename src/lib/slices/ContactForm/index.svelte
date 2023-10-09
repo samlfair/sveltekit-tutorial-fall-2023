@@ -1,14 +1,18 @@
 <script>
 	import { PrismicRichText } from '@prismicio/svelte';
+	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 
 	/** @type {import("@prismicio/client").Content.ContactFormSlice} */
 	export let slice;
+
+	let submitted = false;
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<PrismicRichText field={slice.primary.heading} />
 	<PrismicRichText field={slice.primary.description} />
-	<form method="POST" action="/">
+	<form method="POST" action="/" on:submit={() => (submitted = true)} use:enhance>
 		<div class="group">
 			<label for="email">Email</label>
 			<input required type="email" id="email" name="email" />
@@ -18,7 +22,9 @@
 			<textarea name="message" id="message" minlength="1" maxlength="1000" />
 		</div>
 		<div class="group">
-			<button>Submit</button>
+			<button disabled={submitted}>
+				{$page.form?.success ? 'Thank you ✨' : 'Submit'}
+			</button>
 		</div>
 	</form>
 </section>
