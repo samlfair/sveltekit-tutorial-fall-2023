@@ -7,6 +7,8 @@
 	export let slice;
 
 	let submitted = false;
+
+	$: loading = submitted && !$page.form?.success;
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
@@ -22,8 +24,8 @@
 			<textarea name="message" id="message" minlength="1" maxlength="1000" />
 		</div>
 		<div class="group">
-			<button disabled={submitted}>
-				{$page.form?.success ? 'Thank you ✨' : 'Submit'}
+			<button class:submitted class:loading disabled={submitted}>
+				{$page.form?.success ? 'Thank you ✨' : loading ? 'Loading' : 'Submit'}
 			</button>
 		</div>
 	</form>
@@ -71,5 +73,24 @@
 
 	button:hover {
 		box-shadow: var(--shadow-2);
+	}
+
+	@keyframes loading {
+		from {
+			background: var(--gray-6);
+		}
+		to {
+			background: var(--gray-7);
+		}
+	}
+
+	button.loading {
+		animation: loading 2s alternate infinite;
+	}
+
+	button.submitted {
+		background: var(--surface-4);
+		box-shadow: none;
+		cursor: default;
 	}
 </style>
