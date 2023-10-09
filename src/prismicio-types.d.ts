@@ -83,6 +83,93 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 export type AllDocumentTypes = PageDocument;
 
 /**
+ * Primary content in *CardList → Primary*
+ */
+export interface CardListSliceDefaultPrimary {
+	/**
+	 * Heading field in *CardList → Primary*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	heading: prismic.TitleField;
+}
+
+/**
+ * Primary content in *CardList → Items*
+ */
+export interface CardListSliceDefaultItem {
+	/**
+	 * Title field in *CardList → Items*
+	 *
+	 * - **Field Type**: Title
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].title
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	title: prismic.TitleField;
+
+	/**
+	 * Description field in *CardList → Items*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * Image field in *CardList → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	image: prismic.ImageField<never>;
+
+	/**
+	 * Name field in *CardList → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: card_list.items[].name
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	name: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for CardList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CardListSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<CardListSliceDefaultPrimary>,
+	Simplify<CardListSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *CardList*
+ */
+type CardListSliceVariation = CardListSliceDefault;
+
+/**
+ * CardList Shared Slice
+ *
+ * - **API ID**: `card_list`
+ * - **Description**: CardList
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CardListSlice = prismic.SharedSlice<'card_list', CardListSliceVariation>;
+
+/**
  * Primary content in *HeroText → Primary*
  */
 export interface HeroTextSliceDefaultPrimary {
@@ -190,6 +277,11 @@ declare module '@prismicio/client' {
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			CardListSlice,
+			CardListSliceDefaultPrimary,
+			CardListSliceDefaultItem,
+			CardListSliceVariation,
+			CardListSliceDefault,
 			HeroTextSlice,
 			HeroTextSliceDefaultPrimary,
 			HeroTextSliceVariation,
