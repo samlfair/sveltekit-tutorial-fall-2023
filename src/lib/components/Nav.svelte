@@ -9,7 +9,7 @@
 	<ul>
 		{#each links as link}
 			<li>
-				<PrismicLink field={link}>{link.label}</PrismicLink>
+				<PrismicLink field={link.link}>{link.label}</PrismicLink>
 			</li>
 		{/each}
 	</ul>
