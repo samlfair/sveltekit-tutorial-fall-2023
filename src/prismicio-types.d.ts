@@ -4,6 +4,62 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+/**
+ * Item in *Nav → Links*
+ */
+export interface NavDocumentDataLinksItem {
+	/**
+	 * Link field in *Nav → Links*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[].link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	link: prismic.LinkField;
+
+	/**
+	 * Label field in *Nav → Links*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[].label
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	label: prismic.KeyTextField;
+}
+
+/**
+ * Content for Nav documents
+ */
+interface NavDocumentData {
+	/**
+	 * Links field in *Nav*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	links: prismic.GroupField<Simplify<NavDocumentDataLinksItem>>;
+}
+
+/**
+ * Nav document from Prismic
+ *
+ * - **API ID**: `nav`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NavDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<NavDocumentData>,
+	'nav',
+	Lang
+>;
+
 type PageDocumentDataSlicesSlice = CardListSlice | ContactFormSlice | HeroTextSlice | RichTextSlice;
 
 /**
@@ -80,7 +136,7 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 	Lang
 >;
 
-export type AllDocumentTypes = PageDocument;
+export type AllDocumentTypes = NavDocument | PageDocument;
 
 /**
  * Primary content in *CardList → Primary*
@@ -399,6 +455,8 @@ declare module '@prismicio/client' {
 
 	namespace Content {
 		export type {
+			NavDocument,
+			NavDocumentData,
 			PageDocument,
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
