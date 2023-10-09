@@ -1,0 +1,38 @@
+{
+	"name": "sveltekit-starter-prismic-minimal",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "concurrently \"npm:vite:dev\" \"npm:slicemachine\" --prefix-colors blue,magenta",
+		"vite:dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write .",
+		"slicemachine": "start-slicemachine"
+	},
+	"devDependencies": {
+		"@slicemachine/adapter-sveltekit": "^0.3.19",
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/kit": "^1.20.4",
+		"concurrently": "^8.2.1",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte": "^2.30.0",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.10.1",
+		"slice-machine-ui": "^1.16.0",
+		"svelte": "^4.0.5",
+		"svelte-check": "^3.4.3",
+		"typescript": "^5.0.0",
+		"typescript-svelte-plugin": "^0.3.31",
+		"vite": "^4.4.2"
+	},
+	"type": "module",
+	"dependencies": {
+		"@prismicio/client": "^7.3.0",
+		"@prismicio/svelte": "^1.0.1"
+	}
+}
